@@ -1,0 +1,34 @@
+language: generic
+sudo: required
+services:
+- docker
+env:
+  global:
+  - REPO=webispy/artik_devenv_f710
+  - secure: i7VYJj687kQAzAICr6G8+tfYM4V/aKcaMKO5SBkuVESepTDqImX4k+9vPRlhz3GC744wnldtbzNcV4aj2uwEJvxnvfhVbe8ssSlMfKsY9cmJH8F+ds/qinKwxbEZtKV6D9wu2p/kRbq8+HozaaX6LGJhtnU54IJ+30/+QjzkHphlKNH4OMKIYxDn9W5vTAd4QTKqXygWfzCf4hwLy5WE3FdkscWmtNMPKy9tvW4lz05VknxQ/dYZBxGwWqvJTcBiXDUL0G8P2VGtmXiVxviCcCDPnandkV0iJxLSgpsysyFd1RMDo0cO50JGgSwvgUwiumQsgm6MC9ysCx5TXY2c95lD8SgAMlioRx05uibJaihbQ8J4v+uplkdwPcXw6KpBwUFm710P3Hqvrslsm1w3WqPKCxwM8AwgG9KsCbxcZ09+lT1BXRY4XaIBqDulQrpmKPDLEgQGinqmTxKFidgF/zNpvO5YEIEKQQFbUjfBk+lurS+yq3VXbyJmmtJg2SzrLS0/rDFrjn1y34GLqRdSIp7CH57tdQRYu8Ft7/7pCwPZItQakFoTZxd/krS4OSxDANwFfzwuR1ZgkRN7uW72q66Bj71SRSGnXnaW9c8K2IE101+klrRdXpnkt0TY0XN2B4/o9rK3H4oiEHNvY98iRsU3GmE9KBXQo3cHakz3A8c=
+  - secure: QqGbghiYT31xi/KXX7k0ipnBZ4RDPQnV6x3y9qBVF2CMyHlMfXmDgtqTVulePhxWwszROqYcRHouVGppfWEkTa63jm1entCra6qzWYoCgNhBAlCxzqTxv84BXym1ANrYx+9tK/iyYKaNwqnMoPIoH9YGCpb3A9kTSk94oqJV/IsRB8rAwQO65pxyCLC26ZKTgxnymlVlQ2zHqEW3Se2WNuAtrWH/RyzC62qMO1au1z42QhEIRUz/YHDOjiznUHcAH2ndOcddH/Fh7KgtRvg7bF45/0iuDd5l+VtxoeG5JMatvacF3uy31c7fc3C/zXg1d0+zrZhFbnnYJq7XqVeFy+ainZ1nLTlWWSM349wFXKtOEhO6/UpQNXj+QpIjO82sS5sciAXeCIpjYKWBBwJNRysrDB55SqYEax+FakXgF/+O69cSGOSxeGoAlusuvkchjZX1WccGhoT3v4gyopAjnixbXRJGmBgvuqOFwtksyQH7mriVLlbww+x7wi3HuUl6QfMOxOE1C92xP3dHOaCtchbEVNrTeJOV+eUFcqez2eUOx3/X96C+vRaTbkR4HxJIgIQxbNYAIzw4wTvVxt3u5aOnDz8I6911v06WIzevcYuHsr2fJGAJxiJ5vHffyTGFbmvQPAmjYJL6eLJAVSXGp5xSybizZ3wbLMct2AvbQ6Q=
+  - secure: EguF2URyopKYjNE8UdF0NM2P7mQetmMRqhigYBN7Rq+IZNNjy1SXAOuPa9eg3XCNM7GukqccCSogA5/B56vTxk1JZIT1rtkhDNzbOg6702LzOUBxvIkHpPYnOdLHh2El4taPxLs/cO/wywxZmDvUMVIXhR2UW7CJVELaTER/2BdDGZmVW5D3A/nJNirwAIF2BQzq/UuN81SyzpdTkpDQQW7tGz+zyPpr22jOqvioxkDSWCXLIXoczCB6jvzosc+8eGgAYDZlYHCgzoTb8qd1sD1v084f4X/Y9badIzvcbdQQAXM7Pd4UP+8bYTYcnfZfYMIdcgf2xWfeelNZxTurm/vsb989f4MeBoF0bxUaqictEel0wA5SUomJpHQE0rWkQGnNTG9MQxQ2YjErPMGQ6SrjY2vRs9AtJPLGbgQrjpLSgeBbokxTEACY/HeWHPfPr3GUgcAgDbDAQpgf6LOhrOrux/z1VsVlzlAAWlhuXUheAQqb5ASTDpgJx/gf2PpNofJ9bAUx/Cys99PPLXYpnnm8q91GSeZrD6i4PBc7DHrUSKnyIUN8g6fcoW2uJjqacBUxnPHAVFDFOjmCndbANJgAlOemSs0WXSyzI7jGah5QThqZ4FO4Yzj9T408+hHbsrMoZGPbLdsBzjRSqZ82rMwt+U/4IFyZgn9Wrt/eMEY=
+
+before_install:
+  - sudo apt install -y qemu-user-static binfmt-support
+  - update-binfmts --display
+  - docker ps -a
+  - docker system info
+  - sudo rm /dev/shm
+  - sudo mkdir /dev/shm
+  - sudo mount --bind /run/shm /dev/shm
+  - docker pull webispy/artik_devenv_rootfs:f710
+
+script:
+  - docker create -it --privileged --name base webispy/artik_devenv_rootfs:f710
+  - docker start base
+  - docker ps -a
+  - docker exec -t base update-binfmts --display
+  - docker exec -t base bash -c 'fed-artik-init-buildsys && sudo -H chroot_fedora /home/work/FED_ARTIK_ROOT/BUILDROOT "dnf update -y"'
+  - docker stop base
+  - docker commit base $REPO
+  - docker rm base
+
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker push $REPO
