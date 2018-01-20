@@ -19,10 +19,12 @@ before_install:
   - sudo mount --bind /run/shm /dev/shm
 
 script:
-  - ./build.sh f710 && ./build.sh f530 && ./build.sh f520
+  - bash ./build.sh
 
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker push webispy/artik_devenv_f710
   - docker push webispy/artik_devenv_f530
   - docker push webispy/artik_devenv_f520
+  - docker push webispy/artik_devenv_u710
+  - docker push webispy/artik_devenv_u530

@@ -1,24 +1,30 @@
 #!/bin/sh
-set -e
+set -ev
 
-if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters"
-	exit 1
-fi
+pids=""
 
-docker pull webispy/artik_devenv_rootfs:$1
+#./build_fedora.sh f710 &
+#pids+=" $!"
 
-# The "--privileged" option is required because we should run the
-# "mount --bind" command inside the container.
-docker create -it --privileged --name $1 webispy/artik_devenv_rootfs:$1
+#./build_fedora.sh f530 &
+#pids+=" $!"
 
-docker start $1
-docker exec -t $1 bash -c 'fed-artik-init-buildsys && sudo -H chroot_fedora /home/work/FED_ARTIK_ROOT/BUILDROOT "dnf update -y"'
-docker stop $1
+#./build_fedora.sh f520 &
+#pids+=" $!"
 
-# Create a docker image using container
-docker commit $1 webispy/artik_devenv_$1
+./build_ubuntu.sh u710 &
+pids+=" $!"
 
-# Remove container
-docker rm $1
+./build_ubuntu.sh u530 &
+pids+=" $!"
+
+# Wait for all processes to finish.
+for p in $pids; do
+	if wait $p; then
+		echo "Process $p success"
+	else
+		echo "Process $p fail"
+		exit 1
+	fi
+done
 
