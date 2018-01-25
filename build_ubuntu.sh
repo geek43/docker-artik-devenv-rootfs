@@ -22,6 +22,13 @@ case "$1" in
 		docker exec -t $1 bash -c "mk-sbuild --arch armhf xenial && sudo sed -i 's/^union-type=.*/union-type=overlay/' /etc/schroot/chroot.d/sbuild-xenial-armhf && sbuild-update xenial-armhf && sbuild-upgrade xenial-armhf"
 		;;
 
+	"u710cross")
+		docker exec -t $1 bash -c "mk-sbuild --target arm64 xenial && sudo sed -i 's/^union-type=.*/union-type=overlay/' /etc/schroot/chroot.d/sbuild-xenial-amd64-arm64 && sbuild-update xenial-amd64-arm64 && sbuild-upgrade xenial-amd64-arm64"
+		;;
+
+	"u530cross")
+		docker exec -t $1 bash -c "mk-sbuild --target armhf xenial && sudo sed -i 's/^union-type=.*/union-type=overlay/' /etc/schroot/chroot.d/sbuild-xenial-amd64-armhf && sbuild-update xenial-amd64-armhf && sbuild-upgrade xenial-amd64-armhf"
+		;;
 	*)
 		exit 1
 esac

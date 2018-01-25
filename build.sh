@@ -12,10 +12,16 @@ pids=""
 #./build_fedora.sh f520 &
 #pids+=" $!"
 
-./build_ubuntu.sh u710 &
+#./build_ubuntu.sh u710 &
+#pids+=" $!"
+
+#./build_ubuntu.sh u530 &
+#pids+=" $!"
+
+./build_ubuntu.sh u710cross &
 pids+=" $!"
 
-./build_ubuntu.sh u530 &
+./build_ubuntu.sh u530cross &
 pids+=" $!"
 
 # Wait for all processes to finish.

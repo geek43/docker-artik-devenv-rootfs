@@ -28,3 +28,5 @@ after_success:
   - docker push webispy/artik_devenv_f520
   - docker push webispy/artik_devenv_u710
   - docker push webispy/artik_devenv_u530
+  - docker push webispy/artik_devenv_u710cross
+  - docker push webispy/artik_devenv_u530cross
