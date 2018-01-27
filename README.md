@@ -42,7 +42,7 @@ sample-debuginfo.fc24.armv7hl.rpm
 
 ## ARTIK 710/530 Ubuntu
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u710.svg)](https://hub.docker.com/r/webispy/artik_devenv_u710/) [![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u530.svg)](https://hub.docker.com/r/webispy/artik_devenv_u530/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u710.svg)](https://hub.docker.com/r/webispy/artik_devenv_u710/) [![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u530.svg)](https://hub.docker.com/r/webispy/artik_devenv_u530/) [![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u710cross.svg)](https://hub.docker.com/r/webispy/artik_devenv_u710cross/) [![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_u530cross.svg)](https://hub.docker.com/r/webispy/artik_devenv_u530cross/)
 
 To save time, you can download images that have already completed the **mk-sbuild** and **apt update && apt upgrade** tasks.
 
@@ -50,6 +50,10 @@ To save time, you can download images that have already completed the **mk-sbuil
 $ docker pull webispy/artik_devenv_u710
 or
 $ docker pull webispy/artik_devenv_u530
+or
+$ docker pull webispy/artik_devenv_u710cross
+or
+$ docker pull webispy/artik_devenv_u530cross
 ```
 
 You can build a DEB package with following commands. The default user for docker image is set to '**work**' (/home/work/).
@@ -71,14 +75,30 @@ sample
 # 710 (arm64)
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
+    -v /var/lib/schroot/chroots \
     webispy/artik_devenv_u710 \
     bash -c "cd /home/work/sample && sbuild --chroot xenial-arm64 --arch arm64"
 
 # 530 (armhf)
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
+    -v /var/lib/schroot/chroots \
     webispy/artik_devenv_u530 \
     bash -c "cd /home/work/sample && sbuild --chroot xenial-armhf --arch armhf"
+
+# 710 (arm64) - cross compile
+$ docker run -it --rm --privileged \
+    -v /home/user/src/sample:/home/work/sample \
+    -v /var/lib/schroot/chroots \
+    webispy/artik_devenv_u710cross \
+    bash -c "cd /home/work/sample && sbuild --chroot xenial-amd64-arm64 --host arm64"
+
+# 530 (armhf) - cross compile
+$ docker run -it --rm --privileged \
+    -v /home/user/src/sample:/home/work/sample \
+    -v /var/lib/schroot/chroots \
+    webispy/artik_devenv_u530cross \
+    bash -c "cd /home/work/sample && sbuild --chroot xenial-amd64-armhf --host armhf"
 
 $ ls /home/user/src
 sample/
@@ -89,11 +109,11 @@ sample.tar.gz
 
 # How to create a image manually
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/) [![Docker Build Status](https://img.shields.io/docker/build/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/)
+
 Please refer to the following files.
 
 ## Fedora
-
-[![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/) [![Docker Build Status](https://img.shields.io/docker/build/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/)
 
 - [build_fedora.sh](build_fedora.sh)
 - [f710/Dockerfile](f710/Dockerfile) - **webispy/artik_devenv** image + ARTIK 710 fedora rootfs
