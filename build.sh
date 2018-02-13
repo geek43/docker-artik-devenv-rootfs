@@ -1,36 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 set -ev
 
-pids=""
+if [ "$#" -ne 1 ]; then
+	echo "Illegal number of parameters"
+	exit 1
+fi
 
-#./build_fedora.sh f710 &
-#pids+=" $!"
+TARGET=$1
 
-#./build_fedora.sh f530 &
-#pids+=" $!"
-
-#./build_fedora.sh f520 &
-#pids+=" $!"
-
-#./build_ubuntu.sh u710 &
-#pids+=" $!"
-
-#./build_ubuntu.sh u530 &
-#pids+=" $!"
-
-./build_ubuntu.sh u710cross &
-pids+=" $!"
-
-./build_ubuntu.sh u530cross &
-pids+=" $!"
-
-# Wait for all processes to finish.
-for p in $pids; do
-	if wait $p; then
-		echo "Process $p success"
-	else
-		echo "Process $p fail"
-		exit 1
-	fi
-done
-
+if [[ $TARGET == f* ]]; then
+	./build_fedora.sh $TARGET
+elif [[ $TARGET == u* ]]; then
+	./build_ubuntu.sh $TARGET
+else
+	echo "Not supported target: $TARGET"
+	exit 1
+fi

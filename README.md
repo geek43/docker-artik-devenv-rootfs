@@ -107,26 +107,11 @@ sample-dbg_arm64.deb
 sample.tar.gz
 ```
 
-# How to create a image manually
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/) [![Docker Build Status](https://img.shields.io/docker/build/webispy/artik_devenv_rootfs.svg)](https://hub.docker.com/r/webispy/artik_devenv_rootfs/)
+# References
 
-Please refer to the following files.
-
-## Fedora
-
-- [build_fedora.sh](build_fedora.sh)
-- [f710/Dockerfile](f710/Dockerfile) - **webispy/artik_devenv** image + ARTIK 710 fedora rootfs
-- [f530/Dockerfile](f530/Dockerfile) - **webispy/artik_devenv** image + ARTIK 530 fedora rootfs
-- [f520/Dockerfile](f520/Dockerfile) - **webispy/artik_devenv** image + ARTIK 520 fedora rootfs
-
-You can download the rootfs from https://github.com/SamsungARTIK/fedora-spin-kickstarts/releases
-
-## Ubuntu
-
-- [build_ubuntu.sh](build_ubuntu.sh)
-
-More information can be found at https://github.com/SamsungARTIK/ubuntu-build-service
+- https://github.com/SamsungARTIK/fedora-spin-kickstarts/releases
+- https://github.com/SamsungARTIK/ubuntu-build-service
 
 # License
 

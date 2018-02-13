@@ -35,7 +35,7 @@ esac
 docker stop $1
 
 # Create a docker image using container
-docker commit $1 webispy/artik_devenv_$1
+docker commit --change='CMD ["zsh"]' $1 webispy/artik_devenv_$1
 
 # Remove container
 docker rm $1
