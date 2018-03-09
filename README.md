@@ -32,8 +32,9 @@ sample
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
     -v /home/user/rpm:/home/work/FED_ARTIK_ROOT/repos/24/armv7hl/RPMS \
+    -w /home/work/sample \
     webispy/artik_devenv_f710 \
-    bash -c "cd /home/work/sample && fed-artik-build"
+    fed-artik-build
 
 $ ls /home/user/rpm
 sample.fc24.armv7hl.rpm
@@ -76,29 +77,33 @@ sample
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
     -v /var/lib/schroot/chroots \
+    -w /home/work/sample \
     webispy/artik_devenv_u710 \
-    bash -c "cd /home/work/sample && sbuild --chroot xenial-arm64 --arch arm64"
+    sbuild --chroot xenial-arm64 --arch arm64
 
 # 530 (armhf)
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
     -v /var/lib/schroot/chroots \
+    -w /home/work/sample \
     webispy/artik_devenv_u530 \
-    bash -c "cd /home/work/sample && sbuild --chroot xenial-armhf --arch armhf"
+    sbuild --chroot xenial-armhf --arch armhf
 
 # 710 (arm64) - cross compile
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
     -v /var/lib/schroot/chroots \
+    -w /home/work/sample \
     webispy/artik_devenv_u710cross \
-    bash -c "cd /home/work/sample && sbuild --chroot xenial-amd64-arm64 --host arm64"
+    sbuild --chroot xenial-amd64-arm64 --host arm64
 
 # 530 (armhf) - cross compile
 $ docker run -it --rm --privileged \
     -v /home/user/src/sample:/home/work/sample \
     -v /var/lib/schroot/chroots \
+    -w /home/work/sample \
     webispy/artik_devenv_u530cross \
-    bash -c "cd /home/work/sample && sbuild --chroot xenial-amd64-armhf --host armhf"
+    sbuild --chroot xenial-amd64-armhf --host armhf
 
 $ ls /home/user/src
 sample/
