@@ -14,6 +14,10 @@ docker create -it --privileged --name $1 webispy/artik_devenv
 
 docker start $1
 case "$1" in
+	"ux64")
+		docker exec -t $1 bash -c "mk-sbuild --arch amd64 xenial && sudo sed -i 's/^union-type=.*/union-type=overlay/' /etc/schroot/chroot.d/sbuild-xenial-amd64 && sbuild-update xenial-amd64 && sbuild-upgrade xenial-amd64"
+		;;
+
 	"u710")
 		docker exec -t $1 bash -c "mk-sbuild --arch arm64 xenial && sudo sed -i 's/^union-type=.*/union-type=overlay/' /etc/schroot/chroot.d/sbuild-xenial-arm64 && sbuild-update xenial-arm64 && sbuild-upgrade xenial-arm64"
 		;;

@@ -15,6 +15,7 @@ env:
     - TARGET=u530
     - TARGET=u710cross
     - TARGET=u530cross
+    - TARGET=ux64
 
 install:
   # To use the qemu-arm-static in the docker container, host kernel should
