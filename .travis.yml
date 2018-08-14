@@ -20,6 +20,7 @@ env:
 install:
   # To use the qemu-arm-static in the docker container, host kernel should
   # enable the foreign architecture.
+  - sudo apt update
   - sudo apt install -y qemu-user-static binfmt-support
   - update-binfmts --display
   - docker system info
